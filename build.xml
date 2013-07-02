@@ -18,7 +18,7 @@
   <target name="javadoc" depends="init" description="generate peSDK documentation">
         <javadoc
             access="public"
-            additionalparam="-bootclasspath /Users/thieu/Downloads/ADT/sdk/platforms/android-17/android.jar"
+            additionalparam="-bootclasspath /path/to/sdk/platforms/android-##/android.jar"
             author="true"
             classpath="libs/android-support-v4.jar"
             destdir="${doc.dir}"
