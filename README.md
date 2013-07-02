@@ -35,12 +35,7 @@ Demo Configurations
     } catch (PeException e) {
     
     }
-    NSString *udid = [[UIDevice currentDevice] uniqueDeviceIdentifier];
-    NSDictionary *settings = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              udid, peContestAdminIDKey,
-                              @"demosdk", peClientKey,
-                              @"sweeps", pePromoKey,
-                              @"DEMO-SDK1-1234-5678", peConfigAuthKey, nil];
+
 ```                                            
 ### Instant Win (one level):
 ```java
@@ -182,7 +177,7 @@ Creates a new SDK object.
 
   usage: `prizeSDK.getEntryPeriod();`
     
-  > returns: [`JSONObject`]  object of entry period infomation
+  > returns: [`JSONObject`]  object of entry period information
 
 * #### getPrizingInfo
   Gets the number of prize levels and the minimum and maximum level for instant win contest
@@ -204,7 +199,7 @@ For any of the following functions which require the user parameters, you may le
   > returns: [`Boolean`] `true` if a user is authenticated, otherwise `false`
 
 * #### setUserParams 
-  Sets the user paramater array, but does not check the values.
+  Sets the user parameter array, but does not check the values.
 
   usage: `prizeSDK.setUserParams(userParameters);`
    
@@ -317,7 +312,7 @@ For any of the following functions which require the user parameters, you may le
  
 
 * #### buildAndSend 
-  This method allows you to make an asynschronous call to the server with a specific action. It's the base method of peSDK. ViewController that instantiate peSDK will have to implement the `peSDKDelegate` and filter the response by the action string. This method is only required if synchronous calls are needed, otherwise the peSDK provides all the functionalities already.
+  This method allows you to make an asynchronous call to the server with a specific action. It's the base method of peSDK. ViewController that instantiate peSDK will have to implement the `peSDKDelegate` and filter the response by the action string. This method is only required if synchronous calls are needed, otherwise the peSDK provides all the functionalities already.
 
  
   Possible actions are: 
