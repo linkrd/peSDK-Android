@@ -245,6 +245,8 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 		}
 		
 		Log.i(TAG, "JSONObject:"+usernameObj);
+		
+		Log.i(TAG, "getCurrentProfileParams:"+prizeSDK.getCurrentProfileParams());
 		setFragments();
     }
 	@Override

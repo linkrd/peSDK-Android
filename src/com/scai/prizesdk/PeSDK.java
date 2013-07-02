@@ -114,8 +114,28 @@ public class PeSDK {
 		return this.isAuthenticated;
 	}
 
-	public void getCurrentProfileParams() {
+	public JSONArray getCurrentProfileParams() {
+		JSONArray userProfileArray = this.getUserProfile();
+		JSONArray currentProfileArray = new JSONArray();
+		
+		for(int i = 0; i < userProfileArray.length(); i++){
+		    JSONObject profile;
+			try {
+				profile = userProfileArray.getJSONObject(i);
+				String name = profile.getString("name");
+				if (!name.equals("auth")) {
+					if (!profile.isNull("value")) {
+						Log.i(TAG, "getCurrentProfileParams:" + profile.getString("value"));
+						currentProfileArray.put(profile);
+					}
+				}
 
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException:" + e);
+				e.printStackTrace();
+			}		    
+		}
+		return currentProfileArray;
 	}
 
 	public Boolean canEnter(JSONObject params) {
