@@ -354,7 +354,8 @@ Multilingual games can be done using the localized NLS.properties file.
 
 ## Javadoc
 
-Use ant to build javadoc for peSDK Android. Edit build.xml file and edit classpath and bootclasspath attribute. Specifically, edit "/path/to/sdk/platforms/android-##/android.jar" and "/path/to/android-support-v4.jar" and any other jars that you get warning messages about
+Use ant to build javadoc for peSDK Android. Edit build.xml file and edit classpath and bootclasspath attribute. Specifically, edit `additionalparam="-bootclasspath /path/to/sdk/platforms/android-##/android.jar"" packagelistLoc="/path/to/sdk/docs/reference" />` and `<link offline="true" href="http://developer.android.com/reference/" packagelistLoc="/path/to/sdk/docs/reference" />` and any other jars that you get warning messages about
+
 `ant javadoc`
 
 ## Contact
