@@ -1,0 +1,39 @@
+<project>
+  <description>
+    peSDK for Android - Use ant to generate javadocs
+  </description>
+
+  <property name="source.dir" location="src"/>
+  <property name="doc.dir" location="doc"/>
+ 
+  <target name="init" description="setup project directories">
+    <mkdir dir="${doc.dir}"/>
+  </target>
+
+  <target name="clean" description="remove doc directory">
+    <delete dir="${doc.dir}"/>
+  </target>
+
+  <!-- Generate javadocs for peSDK Android into ${doc.dir} -->
+  <target name="javadoc" depends="init" description="generate peSDK documentation">
+        <javadoc
+            access="public"
+            additionalparam="-bootclasspath /Users/thieu/Downloads/ADT/sdk/platforms/android-17/android.jar"
+            author="true"
+            classpath="libs/android-support-v4.jar"
+            destdir="${doc.dir}"
+            doctitle="peSDK Android"
+            nodeprecated="false"
+            nodeprecatedlist="false"
+            noindex="false"
+            nonavbar="false"
+            notree="false"
+            source="1.7"
+            sourcefiles="src/com/scai/prizesdk/PeException.java,src/com/scai/prizesdk/PeSDK.java,src/com/scai/prizesdk/PeSyncTask.java,src/com/scai/prizesdk/PeClient.java,src/com/scai/prizesdk/PeSDKDelegate.java,src/com/scai/prizesdk/PeAsyncTask.java,src/com/scai/prizesdk/PeConfig.java,src/com/scai/prizesdk/PeConstant.java"
+            splitindex="true"
+            use="true"
+            version="true" >
+			<link offline="true" href="http://developer.android.com/reference/" packagelistLoc="/Users/thieu/Downloads/ADT/sdk/docs/reference" />
+        </javadoc>
+    </target>
+</project>
