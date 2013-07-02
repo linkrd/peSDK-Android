@@ -23,7 +23,8 @@ Demo Configurations
 
 ### Sweeps:
 ```java
-	Map<String,String> configMap = new HashMap<String, String>();
+
+    Map<String,String> configMap = new HashMap<String, String>();
     configMap.put("contest_adminID", unique_ID);
     configMap.put("client", "demosdk");
     configMap.put("promo", "sweeps");
@@ -57,7 +58,7 @@ Demo Configurations
 ```                        
 ### Instant Win (multi level):
 ```java
-Map<String,String> configMap = new HashMap<String, String>();
+	Map<String,String> configMap = new HashMap<String, String>();
     configMap.put("contest_adminID", unique_ID);
     configMap.put("client", "demosdk");
     configMap.put("promo", "instantmulti");
@@ -128,6 +129,9 @@ PrizeSDK Functions
 
 Creates a new SDK object. 
 ```java
+
+	String unique_ID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
+	
     Map<String,String> configMap = new HashMap<String, String>();
     configMap.put("contest_adminID", unique_ID);
     configMap.put("client", "demosdk");
@@ -161,25 +165,31 @@ Creates a new SDK object.
 * #### getRequiredFields
   Get the required fields from the configuration values .
 
-  usage: `[prizeSDK getRequiredFields];`
+  usage: `prizeSDK.getRequiredFields();`
     
-  > returns: [`NSDictionary`] list of required fields
+  > returns: [`JSONArray`] array of required fields
 
 
 * #### getAllFields
   Get all possible profile fields from the configuration values.
 
-  usage: `[prizeSDK getAllFields];`
+  usage: `prizeSDK.getAllFields();`
     
-  > returns: [`NSDictionary`] list of all fields available
+  > returns: [`JSONArray`] array of all fields available
 
+* #### getEntryPeriod
+  Get all possible profile fields from the configuration values.
+
+  usage: `prizeSDK.getEntryPeriod();`
+    
+  > returns: [`JSONObject`]  object of entry period infomation
 
 * #### getPrizingInfo
   Gets the number of prize levels and the minimum and maximum level for instant win contest
 
   usage: `prizeSDK.getPrizingInfo();`
 
-  > returns: [`NSDictionary`] list including number of prize levels and the min and max for instant win or `nil` for sweeps.
+  > returns: [`JSONArray`] list including number of prize levels and the min and max for instant win or `nil` for sweeps.
 
 
 ### User Profile Functions
@@ -196,66 +206,65 @@ For any of the following functions which require the user parameters, you may le
 * #### setUserParams 
   Sets the user paramater array, but does not check the values.
 
-  usage: `[prizeSDK setUserParams:userParameters];`
+  usage: `prizeSDK.setUserParams(userParameters);`
    
   > params: 
-  >  * `userParameters` - set the user parameter dictionary
+  >  * `userParameters` - set the user parameter JSONObject
 
 * #### authenticateOnServer 
   Authenticates the user on the server
 
   usage: 
-  ```java
-  NSError *error = nil;
-  [prizeSDK authenticateOnServer:userParameters error:&error];
-  ```
+```java
+	if (prizeSDK.authenticateOnServer(userParameters)) {
+		Log.i(TAG, "authenticateOnServer");
+	} else {
+		Log.i(TAG, "not authenticateOnServer");
+	}
+```
   
   > params: 
-  >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
-  >  * `error` - pointer to `NSError`
+  >  * `userParameters` - if not already set, JSONOBject of user parameter at least all required fields
   >
-  > returns:[`BOOL`] `YES` if user is successfully authenticated
+  > returns:[`Boolean`] `true` if user is successfully authenticated
   
 
 * #### getCurrentProfileParams 
   Returns the current parameters in the user's profile as key value pairs
 
-  usage: `[prizeSDK getCurrentProfileParams];`
+  usage: `prizeSDK.getCurrentProfileParams();`
   
-  > returns: [`NSDictionary`] keys and values currently set in the user's profiles
+  > returns: [`JSONArray`] keys and values currently set in the user's profiles
 
 
 * #### getUserProfile 
   Returns the current user profile object with all possible profile fields and their current values
 
-  usage: `[prizeSDK getUserProfile];`
+  usage: `prizeSDK.getUserProfile();`
   
   > params: 
-  >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
+  >  * `userParameters` - if not already set, JSONOBject of user parameter at least all required fields
   >
-  > returns: [`NSDictionary`] fields after server update, each field with name, value, and is_required
+  > returns: [`JSONArray`] fields after server update, each field with name, value, and is_required
  
 
 * #### setUserProfile 
   Updates or sets the User Profile on the server.
 
   usage: 
-  ```java
-  NSError *error = nil;
-  [prizeSDK setUserProfile:userParameters error:&error];
-  
-  if(error){
-      //errror setting params
-  } else {
-      //successful setting params
-  }
-  ```
+	```java
+	  	JSONObject profile_fields = new JSONObject();
+		try {
+			profile_fields.put("city", "calgary");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		prizeSDK.setUserProfile(profile_fields, null);
+	```
   
   > params: 
+  >  * `profile_fields` - JSONOBject of all fields to update
   >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
-  >  * `error` - pointer to `NSError`
-  >
-  > returns: [`NSDictionary`] fields after server update, each field with name, value, and is_required
  
 
 ### Entries and Plays Functions
@@ -263,25 +272,24 @@ For any of the following functions which require the user parameters, you may le
 * #### canEnter 
   Checks to see if the user is currently permitted to play / enter (use either canEnter or nextPlay - not both)
 
-  usage: `[prizeSDK canPlay:userParameters error:&error];`
+  usage: `[prizeSDK.canPlay(userParameters);`
   
   > params: 
-  >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
+  >  * `userParameters` - if not already set, JSONOBject of user parameter at least all required fields
   >  * `error` - pointer to `NSError`
   >
-  > returns: [`BOOL`] returns YES if the user is allowed to play
+  > returns: [`Boolean`] returns YES if the user is allowed to play
 
 
 * #### nextPlay 
   Checks when the user can play next. (use either canEnter or nextPlay - not both) 
 
-  usage: `prizeSDK nextPlay:userParameters error:&error];`
+  usage: `prizeSDK.nextPlay(userParameters);`
   
   > params: 
-  >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
-  >  * `error` - pointer to `NSError`
+  >  * `userParameters` - if not already set, JSONOBject of user parameter at least all required fields
   >
-  > returns: Formatted date of when a user can play next. '0' in the case that a user can play now.
+  > returns: [`String`] Formatted date of when a user can play next. '0' in the case that a user can play now.
 
 
 * #### enterSweeps 
@@ -290,7 +298,7 @@ For any of the following functions which require the user parameters, you may le
   usage: `[prizeSDK enterSweeps:userParameters error:&error];`
   
   > params: 
-  >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
+  >  * `userParameters` - if not already set, JSONOBject of user parameter at least all required fields
   >  * `error` - pointer to `NSError`
   >
   > returns: [`NSDictionary`] A game object array containing gameID, result_text and other values
@@ -299,20 +307,19 @@ For any of the following functions which require the user parameters, you may le
 * #### enterInstantWin 
   Enter instant win
 
-  usage: `[prizeSDK enterInstantWin:userParameters error:&error];`
+  usage: `prizeSDK.enterInstantWin(userParameters);`
   
   > params: 
-  >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
-  >  * `error` - pointer to `NSError`
+  >  * `userParameters` - if not already set, JSONOBject of user parameter at least all required fields
+  
   >
-  > returns: [`NSDictionary`] A game object array containing gameID, result_text and other values
+  > returns: [`JSONBObject`] A game object array containing gameID, result_text and other values
  
 
 * #### buildAndSend 
-  This method allows you to make an asynschronous call to the server with a specific action. It's the base method of peSDK. ViewController that instantiate peSDK will have to implement the `peSDKDelegate` and filter the response by the action string.
+  This method allows you to make an asynschronous call to the server with a specific action. It's the base method of peSDK. ViewController that instantiate peSDK will have to implement the `peSDKDelegate` and filter the response by the action string. This method is only required if synchronous calls are needed, otherwise the peSDK provides all the functionalities already.
 
- `@interface HistoryTableViewController : UITableViewController <peSDKDelegate,UITableViewDelegate,UITableViewDataSource>`
-
+ 
   Possible actions are: 
      * `getconfig` - get contest configuration from server, this is called when peSDK is instantiated 
      * `auth_only` - check server authentication for `username`
@@ -324,42 +331,21 @@ For any of the following functions which require the user parameters, you may le
   usage: 
   
     ```java
-
-    - (void) viewWillAppear:(BOOL)animated {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        prizeSDK.delegate = self;
-        NSError *error = nil;
-        
-        [prizeSDK buildAndSend:@"gamehistory" params:nil error:&error];
-        
-        if(error){
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-        }
-    }
-  
     
-    - (void)actionCompleted:(NSDictionary*)responseJSON  {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-        NSString *action = [[NSString alloc] initWithString:[[responseJSON objectForKey:@"result"] valueForKey:@"action"]];
-            
-        if ([action isEqualToString:@"gamehistory"]) {
-            historyArray = [[NSArray alloc] initWithArray:[[responseJSON objectForKey:@"result"] valueForKey:@"history"]];
-            NSArray *formatArray = [prizeSDK gameHistoryData:historyArray];
-            historyArray = [[NSArray alloc] initWithArray:formatArray];
-            historyTable.delegate = self;
-            historyTable.dataSource = self;
-            [historyTable reloadData];
-        }
-    }
+	    @Override
+		public void actionComplete(String action, JSONObject result) {
+			if (action.equals("getconfig")) {
+				configComplete();
+			} else {
+				Log.i(TAG, "actionComplete unknown action:" + action);
+			}
+		}
+  
     ```
      > params: 
      >  * `userParameters` - if not already set, a user parameter array containing at minimum, all required fields
-     >  * `error` - pointer to `NSError`
      >
-     > returns: [`NSArray`] An array of game object arrays containing gameID, result_text and other values
+     > returns: [`JSONObject`] An JSONObject of game info such as containing gameID, result_text and other values
  
 
 ### Other Classes
