@@ -18,6 +18,7 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.Settings.Secure;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -52,9 +53,11 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_main);
-			
+		
+		String unique_ID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
+		
 		Map<String,String> configMap = new HashMap<String, String>();
-        configMap.put("contest_adminID", "tayo");
+        configMap.put("contest_adminID", unique_ID);
         configMap.put("client", "demosdk");
         configMap.put("promo", "instant");
         configMap.put("authkey", "DEMO-SDK1-1234-5678");
