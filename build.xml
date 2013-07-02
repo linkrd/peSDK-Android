@@ -33,7 +33,7 @@
             splitindex="true"
             use="true"
             version="true" >
-			<link offline="true" href="http://developer.android.com/reference/" packagelistLoc="/Users/thieu/Downloads/ADT/sdk/docs/reference" />
+			<link offline="true" href="http://developer.android.com/reference/" packagelistLoc="/path/to/sdk/docs/reference" />
         </javadoc>
     </target>
 </project>
