@@ -26,6 +26,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements PeSDKDelegate, ActionBar.TabListener {
 
@@ -214,7 +217,6 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 		try {
 			jsonParams.put("username", "demo");
 		} catch (JSONException e) {
-			
 			e.printStackTrace();
 		}
 		        		
@@ -247,6 +249,8 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 		Log.i(TAG, "JSONObject:"+usernameObj);
 		
 		Log.i(TAG, "getCurrentProfileParams:"+prizeSDK.getCurrentProfileParams());
+		
+		
 		setFragments();
     }
 	@Override
@@ -281,6 +285,13 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 	
 	public PeSDK getPeSDK() {
 		return prizeSDK;
+	}
+	
+	@Override 
+	public void onStart(){
+		super.onStart();
+		
+		Log.i(TAG, "-----------------------------------main onStart");
 	}
 
 }

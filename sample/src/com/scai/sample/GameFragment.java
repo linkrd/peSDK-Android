@@ -6,6 +6,7 @@ import com.scai.prizesdk.PeException;
 import com.scai.prizesdk.PeSDK;
 import com.scai.prizesdk.PeSDKDelegate;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -29,16 +30,16 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 	PeSDK prizeSDK = null;
 	
 	public GameFragment() {
-	
+		Log.i(TAG, "--------------------------------------GameFragment");
 	}
 
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle bundle = this.getArguments();
-				
+		Log.i(TAG, "--------------------------------------onCreate");		
 		if (bundle != null) {
-//			prizeSDK = bundle.getParcelable("peSDK");
-//			prizeSDK.delegate = this;	
+			//prizeSDK = bundle.getParcelable("peSDK");
+			//prizeSDK.delegate = this;	
 		}
 		MainActivity activity = (MainActivity) getActivity();
 		prizeSDK = activity.getPeSDK();
@@ -47,6 +48,7 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.i(TAG, "--------------------------------------onCreateView");
 		if (view != null) {
 	        ViewGroup parent = (ViewGroup) view.getParent();
 	        if (parent != null)
@@ -61,15 +63,48 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 		return view;
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.i(TAG, "--------------------------------------onResume game");
+		TextView textView = (TextView) view.findViewById(R.id.textView1);
+		Button b = (Button) view.findViewById(R.id.startBtn);
+		if (prizeSDK.canEnter(null)) {
+			textView.setText("Can play");
+		} else {
+			textView.setText("Already played.");
+			b.setVisibility(View.GONE);
+		}
+	}
+	
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Log.i(TAG, "--------------------------------------onAttach game:" + activity.toString());
+		
+	}
+	
 	@Override 
 	public void onStart(){
 		
+		
+		Log.i(TAG, "--------------------------------------onStart");
 		super.onStart();
 		
 		if (prizeSDK != null) {
 			TextView textView = (TextView) view.findViewById(R.id.textView1);
 			Button b = (Button) view.findViewById(R.id.startBtn);
-	
+			b.setOnClickListener(new OnClickListener() {
+
+
+				@Override
+				public void onClick(View v) {
+					JSONObject result =  prizeSDK.enterInstantWin(null);
+		        	Log.i(TAG, "Enter instant win" + result);
+					
+				}
+			});
 			if (prizeSDK.canEnter(null)) {
 				textView.setText("Can play");
 			} else {
@@ -78,17 +113,7 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 			}
 		}
 	}
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-        case R.id.startBtn:
-        	JSONObject result =  prizeSDK.enterInstantWin(null);
-        	Log.i(TAG, "Enter instant win" + result);
-
-            break;
-        }
-		
-	}
+	
 
 	@Override
 	public void actionComplete(String action, JSONObject result) {
@@ -113,6 +138,12 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

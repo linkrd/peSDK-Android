@@ -123,6 +123,7 @@ public class HomeFragment extends Fragment implements PeSDKDelegate, OnClickList
 					
 					if (prizeSDK.authenticateOnServer(obj)) {
 						Log.i(TAG, "authenticateOnServer");
+						Log.i(TAG, "getCurrentProfileParams:"+prizeSDK.getCurrentProfileParams());
 					} else {
 						Log.i(TAG, "not authenticateOnServer");
 					}
