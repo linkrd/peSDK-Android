@@ -3,6 +3,7 @@ package com.scai.sample;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class HistoryListAdapter extends BaseAdapter {
-
+	static final String TAG = HistoryListAdapter.class.getCanonicalName();
 	private Context context;
     private ArrayList<GameHistory> gameHistorys;
     
@@ -18,6 +19,7 @@ public class HistoryListAdapter extends BaseAdapter {
     public HistoryListAdapter(Context context, ArrayList<GameHistory> gameHistorys) {
         this.context = context;
         this.gameHistorys = gameHistorys;
+        Log.i(TAG, "gameHistorys:" + this.gameHistorys.toString());
     }
 	@Override
 	public int getCount() {

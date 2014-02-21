@@ -26,9 +26,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements PeSDKDelegate, ActionBar.TabListener {
 
@@ -87,7 +84,6 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 			alertDialog.show();	
         } 
         
-		
 	}
 
 	public void setFragments() {
@@ -138,21 +134,18 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 	}
 
 	@Override
-	public void onTabSelected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
 
 	/**
@@ -226,7 +219,6 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 			Log.i(TAG, "****************not authenticateOnServer");
 		}
 		
-		
 		JSONObject updateParams = new JSONObject();
 		try {
 			updateParams.put("city", "calgary");
@@ -250,12 +242,12 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 		
 		Log.i(TAG, "getCurrentProfileParams:"+prizeSDK.getCurrentProfileParams());
 		
-		
 		setFragments();
     }
 	@Override
 	public void actionComplete(String action, JSONObject result) {
 		if (action.equals("getconfig")) {
+			Log.i(TAG, "configComplete");
 			configComplete();
 		} else {
 			Log.i(TAG, "actionComplete unknown action:" + action);
@@ -290,7 +282,6 @@ public class MainActivity extends FragmentActivity implements PeSDKDelegate, Act
 	@Override 
 	public void onStart(){
 		super.onStart();
-		
 		Log.i(TAG, "-----------------------------------main onStart");
 	}
 

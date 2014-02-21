@@ -40,10 +40,7 @@ public class HomeFragment extends Fragment implements PeSDKDelegate, OnClickList
 		super.onCreate(savedInstanceState);
 		Bundle bundle = this.getArguments();
 		Log.i(TAG, "onCreate bundle:" +bundle);
-		if (bundle != null) {
-			//prizeSDK = bundle.getParcelable("peSDK");
-			//prizeSDK.delegate = this;	
-		}
+		
 		MainActivity activity = (MainActivity) getActivity();
 		prizeSDK = activity.getPeSDK();
 		prizeSDK.delegate = this;
@@ -132,7 +129,6 @@ public class HomeFragment extends Fragment implements PeSDKDelegate, OnClickList
 				e.printStackTrace();
 			}
 			
-		
 			break;
 		}
 

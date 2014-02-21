@@ -35,12 +35,8 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Bundle bundle = this.getArguments();
 		Log.i(TAG, "--------------------------------------onCreate");		
-		if (bundle != null) {
-			//prizeSDK = bundle.getParcelable("peSDK");
-			//prizeSDK.delegate = this;	
-		}
+		
 		MainActivity activity = (MainActivity) getActivity();
 		prizeSDK = activity.getPeSDK();
 		prizeSDK.delegate = this;	
@@ -66,9 +62,10 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i(TAG, "--------------------------------------onResume game");
+		Log.i(TAG, "--------------------------------------onResume "+prizeSDK.canEnter(null));
 		TextView textView = (TextView) view.findViewById(R.id.textView1);
 		Button b = (Button) view.findViewById(R.id.startBtn);
+		
 		if (prizeSDK.canEnter(null)) {
 			textView.setText("Can play");
 		} else {
@@ -81,28 +78,23 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		Log.i(TAG, "--------------------------------------onAttach game:" + activity.toString());
-		
+		Log.i(TAG, "--------------------------------------onAttach");
 	}
 	
 	@Override 
 	public void onStart(){
-		
-		
-		Log.i(TAG, "--------------------------------------onStart");
 		super.onStart();
-		
+		Log.i(TAG, "--------------------------------------onStart");
+				
 		if (prizeSDK != null) {
 			TextView textView = (TextView) view.findViewById(R.id.textView1);
 			Button b = (Button) view.findViewById(R.id.startBtn);
 			b.setOnClickListener(new OnClickListener() {
 
-
 				@Override
 				public void onClick(View v) {
 					JSONObject result =  prizeSDK.enterInstantWin(null);
 		        	Log.i(TAG, "Enter instant win" + result);
-					
 				}
 			});
 			if (prizeSDK.canEnter(null)) {
@@ -117,7 +109,7 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 
 	@Override
 	public void actionComplete(String action, JSONObject result) {
-		Log.i(TAG, "actionComplete:" + result);
+		Log.i(TAG, "--------------------------------------actionComplete:" + result);
 	}
 
 	@Override
@@ -143,8 +135,6 @@ public class GameFragment extends Fragment implements PeSDKDelegate, OnClickList
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
 	}
 	
-
 }
