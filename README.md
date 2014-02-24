@@ -350,7 +350,7 @@ For any of the following functions which require the user parameters, you may le
 * peConstants: peSDK Android constant variables.
 * peError: manages error levels and exceptions.
 
-Multilingual games can be done using the localized NLS.properties file.
+Multilingual games can be done using the localized NLS.properties file. The NLS.properties file contains all the possible responses from the server. You need to create a new NLS.properties file for each language you want to support. For examples to support French, you will need to create NLS_fr.properties with all values translated to French. Also refer to localization documentation for Android.
 
 ## Javadoc
 
